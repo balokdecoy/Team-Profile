@@ -1,10 +1,9 @@
 // Require dependencies
-
+const employee = require('./lib/Employee');
+const engineer = require('./lib/Engineer');
+const intern = require('./lib/Intern');
+const manager = require('./lib/Manager');
 const inquirer = require('inquirer');
-const employee = require('./lib/employee');
-const engineer = require('./lib/engineer');
-const intern = require('./lib/intern');
-const manager = require('./lib/manager');
 const path = require("path");
 const fs = require('fs');
 
@@ -30,18 +29,25 @@ const newEmployee = () => {
                 "Exit",
             ],
         }
-    ])
-    .then((response) => {
-        let data = render(response);
-        fs.writeFile("test.html", data, (err) =>
-          err ? console.log(err) : console.log('Success!')
-        );
-      });
+    ]).then((data) => {
+       if (data.employeeType === "Manager") {
+           buildManager();
+       }
+       else if (data.employeeType === "Engineer") {
+           buildEngineer();
+       }
+       else if (data.employeeType === "Intern") {
+           buildIntern();
+       }
+       else if (data.employeeType === "Exit") {
+           console.log(teamArray);
+       }
+        
+    })
 };
 
 newEmployee();
-    
-
+  
 const buildManager = () => {
     inquirer.prompt([
         {
@@ -66,7 +72,10 @@ const buildManager = () => {
             name: "managerPhone",
             message: "Enter manager's office number",
         },
-    ]);
+    ]).then((data) => {
+        console.log(data.managerName)
+        newEmployee();
+    });
 };
 
 const buildEngineer = () => {
