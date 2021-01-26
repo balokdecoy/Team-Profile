@@ -10,50 +10,26 @@ const fs = require('fs');
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-const render = require("./lib/htmlRenderer");
+render = require("./lib/htmlRenderer");
 
 
 const teamArray = [];
-
-
-const newEmployee = () => {
-    inquirer.prompt([
-        {
-            type: "list",
-            name: "employeeType",
-            message: "Which employee would you like to add?",
-            choices: [
-                "Manager",
-                "Engineer",
-                "Intern",
-                "Exit",
-            ],
-        }
-    ]).then((data) => {
-       if (data.employeeType === "Manager") {
-           buildManager();
-       }
-       else if (data.employeeType === "Engineer") {
-           buildEngineer();
-       }
-       else if (data.employeeType === "Intern") {
-           buildIntern();
-       }
-       else if (data.employeeType === "Exit") {
-           console.log(teamArray);
-       }
-        
-    })
-};
-
-newEmployee();
   
 const buildManager = () => {
+    console.log("First you will need to create a manager for your team.");
     inquirer.prompt([
         {
             type: "input",
             name: "manName",
             message: "Enter manager name",
+            validate: data => {
+                if (data !== "") {
+                    return true;
+                }
+                else {
+                    return "Please enter a valid manager name";
+                }
+            }
         },
 
         {
@@ -72,10 +48,39 @@ const buildManager = () => {
             name: "officeNumber",
             message: "Enter manager's office number",
         },
+        
     ]).then((data) => {
-        teamArray.push(new Manager(data.manName, data.manID, data.manEmail, data.officeNumber));
-        newEmployee();
+        const manager = new Manager(data.manName, data.manID, data.manEmail, data.officeNumber);
+        teamArray.push(manager);
+        addEmployee();
     });
+};
+
+const addEmployee = () => {
+    inquirer.prompt([
+        {
+            type: "list",
+            name: "employeeType",
+            message: "Would you like to add an employee?",
+            choices: [
+                "Engineer",
+                "Intern",
+                "Exit to generate team",
+            ],
+        }
+    ]).then((data) => {
+     if (data.employeeType === "Engineer") {
+           buildEngineer();
+       }
+       else if (data.employeeType === "Intern") {
+           buildIntern();
+       }
+       else if (data.employeeType === "Exit to generate team") {
+           console.log(teamArray);
+           writeFile();
+       }
+        
+    })
 };
 
 const buildEngineer = () => {
@@ -103,6 +108,7 @@ const buildEngineer = () => {
             message: "Enter Github profile name",
         },
     ])
+    addEmployee();
 };
 
 const buildIntern = () => {
@@ -130,6 +136,14 @@ const buildIntern = () => {
             message: "Enter school name",
         },
     ])
+    addEmployee();
 };
 
-//module.exports = index
+const writeFile = () => {
+    fs.writeFileSync(outputPath, render(teamArray), "utf-8");
+    console.log('hello');
+}
+
+buildManager();
+
+//module.exports = app
