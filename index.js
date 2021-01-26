@@ -1,8 +1,8 @@
 // Require dependencies
-const employee = require('./lib/Employee');
-const engineer = require('./lib/Engineer');
-const intern = require('./lib/Intern');
-const manager = require('./lib/Manager');
+const Employee = require('./lib/Employee');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
+const Manager = require('./lib/Manager');
 const inquirer = require('inquirer');
 const path = require("path");
 const fs = require('fs');
@@ -52,28 +52,28 @@ const buildManager = () => {
     inquirer.prompt([
         {
             type: "input",
-            name: "managerName",
+            name: "manName",
             message: "Enter manager name",
         },
 
         {
             type: "input",
-            name: "managerID",
+            name: "manID",
             message: "Enter manager ID number",
         },
        
         {
             type: "input",
-            name: "managerEmail",
+            name: "manEmail",
             message: "Enter manager email",
         },
         {
             type: "input",
-            name: "managerPhone",
+            name: "officeNumber",
             message: "Enter manager's office number",
         },
     ]).then((data) => {
-        console.log(data.managerName)
+        teamArray.push(new Manager(data.manName, data.manID, data.manEmail, data.officeNumber));
         newEmployee();
     });
 };
@@ -99,8 +99,8 @@ const buildEngineer = () => {
         },
         {
             type: "input",
-            name: "engineerPhone",
-            message: "Enter engineer's office number",
+            name: "githubProfile",
+            message: "Enter Github profile name",
         },
     ])
 };
@@ -127,7 +127,7 @@ const buildIntern = () => {
         {
             type: "input",
             name: "internPhone",
-            message: "Enter intern's office number",
+            message: "Enter school name",
         },
     ])
 };
