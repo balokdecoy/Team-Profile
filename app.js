@@ -105,7 +105,6 @@ const addEmployee = () => {
            buildIntern();
        }
        else if (data.employeeType === "Exit to generate team") {
-           console.log(teamArray);
            writeFile();
        }
         
@@ -123,7 +122,7 @@ const buildEngineer = () => {
                     return true;
                 }
                 else {
-                    return "Please enter a valid manager name";
+                    return "Please enter a valid engineer name";
                 }
             }
         },
@@ -190,7 +189,7 @@ const buildIntern = () => {
                     return true;
                 }
                 else {
-                    return "Please enter a valid manager name";
+                    return "Please enter a valid intern name";
                 }
             }
         },
