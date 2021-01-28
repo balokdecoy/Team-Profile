@@ -36,17 +36,46 @@ const buildManager = () => {
             type: "input",
             name: "manID",
             message: "Enter manager ID number",
+            validate: data => {
+                const check = isNaN(data);
+                if (check) {
+                    return "Please enter a valid ID number";
+                }
+                else {
+                    return true;
+                }
+            }
         },
        
         {
             type: "input",
             name: "manEmail",
             message: "Enter manager email",
+            validate: data => {
+                const check = data.match(
+                    /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
+                );
+                if (check) {
+                    return true;
+                }
+                else {
+                    return "Please enter a valid email address"
+                }
+            }
         },
         {
             type: "input",
             name: "officeNumber",
             message: "Enter manager's office number",
+            validate: data => {
+                const check = isNaN(data);
+                if (check) {
+                    return "Please enter a valid office number";
+                }
+                else {
+                    return true;
+                }
+            }
         },
         
     ]).then((data) => {
@@ -87,63 +116,139 @@ const buildEngineer = () => {
     inquirer.prompt([
         {
             type: "input",
-            name: "engineerName",
+            name: "engName",
             message: "Enter engineer name",
+            validate: data => {
+                if (data !== "") {
+                    return true;
+                }
+                else {
+                    return "Please enter a valid manager name";
+                }
+            }
         },
 
         {
             type: "input",
-            name: "engineerID",
+            name: "engID",
             message: "Enter engineer ID number",
+            validate: data => {
+                const check = isNaN(data);
+                if (check) {
+                    return "Please enter a valid ID number";
+                }
+                else {
+                    return true;
+                }
+            }
         },
        
         {
             type: "input",
-            name: "engineerEmail",
+            name: "engEmail",
             message: "Enter engineer email",
+            validate: data => {
+                const check = data.match(
+                    /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
+                );
+                if (check) {
+                    return true;
+                }
+                else {
+                    return "Please enter a valid email address"
+                }
+            }
         },
         {
             type: "input",
             name: "githubProfile",
             message: "Enter Github profile name",
+            validate: data => {
+                if (data !== "") {
+                    return true;
+                }
+                else {
+                    return "Please enter a valid github profile name";
+                }
+            }
         },
-    ])
-    addEmployee();
+    ]).then((data) => {
+        const engineer = new Engineer(data.engName, data.engID, data.engEmail, data.githubProfile);
+        teamArray.push(engineer);
+        addEmployee();
+    });
 };
 
 const buildIntern = () => {
     inquirer.prompt([
         {
             type: "input",
-            name: "internName",
+            name: "intName",
             message: "Enter intern name",
+            validate: data => {
+                if (data !== "") {
+                    return true;
+                }
+                else {
+                    return "Please enter a valid manager name";
+                }
+            }
         },
 
         {
             type: "input",
-            name: "internID",
+            name: "intID",
             message: "Enter intern ID number",
+            validate: data => {
+                const check = isNaN(data);
+                if (check) {
+                    return "Please enter a valid ID number";
+                }
+                else {
+                    return true;
+                }
+            }
         },
        
         {
             type: "input",
-            name: "internEmail",
+            name: "intEmail",
             message: "Enter intern email",
+            validate: data => {
+                const check = data.match(
+                    /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
+                );
+                if (check) {
+                    return true;
+                }
+                else {
+                    return "Please enter a valid email address"
+                }
+            }
         },
         {
             type: "input",
-            name: "internPhone",
+            name: "intSchool",
             message: "Enter school name",
+            validate: data => {
+                if (data !== "") {
+                    return true;
+                }
+                else {
+                    return "Please enter a valid school name";
+                }
+            }
         },
-    ])
-    addEmployee();
+    ]).then((data) => {
+        const intern = new Intern(data.intName, data.intID, data.intEmail, data.intSchool);
+        teamArray.push(intern);
+        addEmployee();
+    });
 };
 
 const writeFile = () => {
     fs.writeFileSync(outputPath, render(teamArray), "utf-8");
-    console.log('hello');
-}
+    console.log('Program complete. Check the output folder for your custom Team Profile page.');
+};
 
 buildManager();
-
-//module.exports = app

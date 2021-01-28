@@ -2,9 +2,9 @@
   "name": "team-profile",
   "version": "1.0.0",
   "description": "A CLI program that creates dynamic and informative team profiles.",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --verbose test/*"
   },
   "repository": {
     "type": "git",
