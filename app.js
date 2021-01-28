@@ -37,7 +37,7 @@ const buildManager = () => {
             name: "manID",
             message: "Enter manager ID number",
             validate: data => {
-                const check = isNaN(data);
+                const check = isNaN(data) || data === "";
                 if (check) {
                     return "Please enter a valid ID number";
                 }
@@ -68,7 +68,7 @@ const buildManager = () => {
             name: "officeNumber",
             message: "Enter manager's office number",
             validate: data => {
-                const check = isNaN(data);
+                const check = isNaN(data) || data === "";
                 if (check) {
                     return "Please enter a valid office number";
                 }
@@ -132,7 +132,7 @@ const buildEngineer = () => {
             name: "engID",
             message: "Enter engineer ID number",
             validate: data => {
-                const check = isNaN(data);
+                const check = isNaN(data) || data === "";
                 if (check) {
                     return "Please enter a valid ID number";
                 }
@@ -199,7 +199,7 @@ const buildIntern = () => {
             name: "intID",
             message: "Enter intern ID number",
             validate: data => {
-                const check = isNaN(data);
+                const check = isNaN(data) || data === "";
                 if (check) {
                     return "Please enter a valid ID number";
                 }
